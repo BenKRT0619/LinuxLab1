@@ -658,8 +658,8 @@ Lab 2 is maintained separately to preserve the Lab 1 baseline.
 
 **Embedded Linux Lab 1**
 
-**Student:** Hoang Trung Hai
-**Student ID:** SS20****
+**Student:** Huynh Thien Vu
+**Student ID:** SE 201733
 **University:** FPT University
 **Major:** IC Design
 
