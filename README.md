@@ -1,16 +1,5 @@
 # Embedded Linux Lab 1
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Architecture-ARMv7-blue?style=for-the-badge" alt="ARMv7">
-  <img src="https://img.shields.io/badge/Linux-5.15-orange?style=for-the-badge" alt="Linux 5.15">
-  <img src="https://img.shields.io/badge/U--Boot-2022.04-green?style=for-the-badge" alt="U-Boot 2026.04-LTS">
-  <img src="https://img.shields.io/badge/BusyBox-1.35.0-purple?style=for-the-badge" alt="BusyBox 1.35.0">
-  <img src="https://img.shields.io/badge/QEMU-vexpress--a9-red?style=for-the-badge" alt="QEMU vexpress-a9">
-</p>
-
-<p align="center">
-  <b>A minimal ARMv7 Embedded Linux system built from source and booted with QEMU.</b>
-</p>
 
 <p align="center">
   Linux Kernel 5.15 · U-Boot 2022.04 · BusyBox 1.35.0 · Initramfs · ARM Cortex-A9
@@ -22,9 +11,9 @@
 
 This repository contains the complete implementation of **Embedded Linux Lab 1**, focusing on the fundamental architecture and boot process of an embedded Linux system.
 
-The system is built for an **ARMv7 / Cortex-A9** platform and runs on the **QEMU `vexpress-a9`** machine.
+The system is use the **ARMv7 / Cortex-A9** platform and runs on the **QEMU `vexpress-a9`** machine.
 
-The project covers the complete path from kernel and bootloader configuration to a working minimal Linux userspace:
+The complete path from kernel and bootloader configuration to a working minimal Linux userspace:
 
 ```text
 Linux Kernel
@@ -37,10 +26,11 @@ Linux Kernel
       ↓
 QEMU ARM Platform
       ↓
-Bootable Embedded Linux System
+Bootable Embedded
+  Linux System
 ```
 
-The final system successfully boots Linux Kernel 5.15 and provides an interactive BusyBox shell.
+Result: successfully boots Linux Kernel 5.15 and provides an interactive BusyBox shell.
 
 ---
 
