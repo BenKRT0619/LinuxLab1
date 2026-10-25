@@ -41,31 +41,48 @@ The system follows a layered Embedded Linux architecture:
 ```mermaid
 flowchart TB
 
-    subgraph APP["APPLICATION LAYER"]
-        A["BusyBox Shell<br/><b>/bin/sh</b><br/><br/>ls · cat · ps · mount · echo"]
-    end
-
-    subgraph USER["USER SPACE"]
-        B["BusyBox 1.35.0"]
-        C["/init<br/><br/>First Userspace Process"]
-        D["Initramfs<br/><br/>/bin · /sbin · /etc · /dev<br/>/proc · /sys · /usr · /lib"]
+    subgraph PLATFORM["HARDWARE / PLATFORM"]
+        direction LR
+        A["QEMU Emulator<br/>vexpress-a9<br/><br/>ARM Cortex-A9<br/>ARMv7"]
+        B["Device Tree Blob<br/>vexpress-v2p-ca9.dtb"]
     end
 
     subgraph KERNEL["KERNEL SPACE"]
-        E["Linux Kernel 5.15<br/><br/>Process Management<br/>Memory Management<br/>VFS<br/>Device Drivers"]
+        C["Linux Kernel 5.15<br/><br/>Process Management<br/>Memory Management<br/>Virtual File System<br/>Device Drivers"]
     end
 
-    subgraph PLATFORM["HARDWARE / PLATFORM"]
-        F["QEMU vexpress-a9<br/><br/>ARM Cortex-A9<br/>ARMv7"]
-        G["Device Tree Blob<br/><b>vexpress-v2p-ca9.dtb</b>"]
+    subgraph USER["USER SPACE"]
+        direction TB
+        D["Initramfs<br/><br/>/bin · /sbin · /etc · /dev<br/>/proc · /sys · /usr · /lib"]
+        E["/init<br/><br/>First Userspace Process"]
+        F["BusyBox 1.35.0"]
+
+        D --> E
+        E --> F
     end
 
-    F --> E
-    G --> E
-    E --> C
-    D --> C
-    C --> B
-    B --> A
+    subgraph APP["APPLICATION LAYER"]
+        direction TB
+        G["BusyBox Shell<br/>/bin/sh"]
+        H["System Commands<br/><br/>ls · cat · ps<br/>mount · echo"]
+
+        G --> H
+    end
+
+    A --> C
+    B --> C
+    C --> E
+    F --> G
+
+    classDef hardware fill:#263746,stroke:#9ca3af,color:#ffffff
+    classDef kernel fill:#414141,stroke:#aaaaaa,color:#ffffff
+    classDef userspace fill:#303b46,stroke:#9ca3af,color:#ffffff
+    classDef application fill:#263746,stroke:#9ca3af,color:#ffffff
+
+    class A,B hardware
+    class C kernel
+    class D,E,F userspace
+    class G,H application
 ```
 
 ### Component Layers
