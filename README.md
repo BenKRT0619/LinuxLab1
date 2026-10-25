@@ -41,48 +41,60 @@ The system follows a layered Embedded Linux architecture:
 ```mermaid
 flowchart TB
 
-    subgraph PLATFORM["HARDWARE / PLATFORM"]
+    subgraph HW["HARDWARE / PLATFORM"]
         direction LR
-        A["QEMU Emulator<br/>vexpress-a9<br/><br/>ARM Cortex-A9<br/>ARMv7"]
-        B["Device Tree Blob<br/>vexpress-v2p-ca9.dtb"]
+        CPU["ARM Cortex-A9<br/>ARMv7 Architecture"]
+        QEMU["QEMU Emulator<br/>vexpress-a9"]
+        DTB["Device Tree Blob<br/>vexpress-v2p-ca9.dtb"]
+
+        CPU --- QEMU
+        QEMU --- DTB
     end
 
-    subgraph KERNEL["KERNEL SPACE"]
-        C["Linux Kernel 5.15<br/><br/>Process Management<br/>Memory Management<br/>Virtual File System<br/>Device Drivers"]
+    subgraph KS["KERNEL SPACE"]
+        K["Linux Kernel 5.15"]
+        PM["Process Management"]
+        MM["Memory Management"]
+        VFS["Virtual File System"]
+        DRV["Device Drivers"]
+
+        K --> PM
+        K --> MM
+        K --> VFS
+        K --> DRV
     end
 
-    subgraph USER["USER SPACE"]
+    subgraph US["USER SPACE"]
         direction TB
-        D["Initramfs<br/><br/>/bin · /sbin · /etc · /dev<br/>/proc · /sys · /usr · /lib"]
-        E["/init<br/><br/>First Userspace Process"]
-        F["BusyBox 1.35.0"]
+        IR["Initramfs<br/>/bin · /sbin · /etc<br/>/dev · /proc · /sys<br/>/usr · /lib"]
+        INIT["/init<br/><br/>First Userspace Process"]
+        BB["BusyBox 1.35.0"]
 
-        D --> E
-        E --> F
+        IR --> INIT
+        INIT --> BB
     end
 
     subgraph APP["APPLICATION LAYER"]
-        direction TB
-        G["BusyBox Shell<br/>/bin/sh"]
-        H["System Commands<br/><br/>ls · cat · ps<br/>mount · echo"]
+        SH["BusyBox Shell<br/>/bin/sh"]
+        CMD["Commands<br/>ls · cat · ps<br/>mount · echo"]
 
-        G --> H
+        SH --> CMD
     end
 
-    A --> C
-    B --> C
-    C --> E
-    F --> G
+    HW --> K
+    K --> INIT
+    BB --> SH
 
-    classDef hardware fill:#263746,stroke:#9ca3af,color:#ffffff
-    classDef kernel fill:#414141,stroke:#aaaaaa,color:#ffffff
-    classDef userspace fill:#303b46,stroke:#9ca3af,color:#ffffff
-    classDef application fill:#263746,stroke:#9ca3af,color:#ffffff
+    style HW fill:#263746,stroke:#8b9aaa,color:#ffffff
+    style KS fill:#343434,stroke:#aaaaaa,color:#ffffff
+    style US fill:#303b46,stroke:#8b9aaa,color:#ffffff
+    style APP fill:#263746,stroke:#8b9aaa,color:#ffffff
 
-    class A,B hardware
-    class C kernel
-    class D,E,F userspace
-    class G,H application
+    style K fill:#414141,stroke:#cccccc,color:#ffffff
+    style PM fill:#414141,stroke:#cccccc,color:#ffffff
+    style MM fill:#414141,stroke:#cccccc,color:#ffffff
+    style VFS fill:#414141,stroke:#cccccc,color:#ffffff
+    style DRV fill:#414141,stroke:#cccccc,color:#ffffff
 ```
 
 ### Component Layers
